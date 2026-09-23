@@ -1,7 +1,9 @@
 # SELDI CMS Dashboard
 
-An interactive, **fully static** dashboard for the regional corruption research in
-`Seldi_CMS_2025.xlsx` (SELDI Corruption Monitoring System, survey years
+[Check the Dashboard](https://twibi.github.io/seldi-dashboard/)
+
+An interactive, **fully static** dashboard for the regional corruption research
+(SELDI Corruption Monitoring System, survey years
 2001, 2002, 2014, 2016, 2019, 2021, 2023, 2025).
 
 **One page, one chart, two views** — switched with the *By topic / By country*
@@ -51,16 +53,6 @@ baked in).
 Plain HTML + CSS + JavaScript with [Chart.js 4](https://www.chartjs.org/) from a
 CDN. **No build step, no npm, no server-side code** — everything is static files,
 which is exactly what GitHub Pages serves for free.
-
-## Deploy on GitHub Pages
-
-1. Push this folder to a GitHub repository (as the repository root).
-2. Repo **Settings → Pages → Source: Deploy from a branch**, branch `main`,
-   folder `/ (root)` → Save.
-3. The site appears at `https://<user>.github.io/<repo>/`.
-
-(For a user/organization site named `<user>.github.io`, it is live at the domain
-root.)
 
 ## Updating the data
 
