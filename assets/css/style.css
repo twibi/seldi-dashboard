@@ -1,0 +1,364 @@
+/* SELDI CMS dashboard – shared styles (no build step, plain CSS)
+   Palette: main #2f3283 · accent #ec7627 · background #e9e9e9
+
+   Everything is scoped under `.seldi-root` and all custom properties carry
+   the `--seldi-` prefix, so the dashboard can be pasted into a WordPress
+   page (Custom HTML block) without inheriting the theme's styles or
+   affecting them. The only rules that are not scoped are `:root` (which
+   merely defines namespaced variables — harmless) and
+   `body.seldi-standalone`, which only matches the standalone site. */
+:root {
+  --seldi-main: #2f3283;          /* titles, topic buttons */
+  --seldi-main-soft: #f1f1f8;     /* tinted callout background */
+  --seldi-accent: #ec7627;        /* action buttons, active selectors */
+  --seldi-accent-dark: #d9671d;
+  --seldi-ink: #1c2430;
+  --seldi-ink-soft: #4b5563;
+  --seldi-ink-faint: #6b7280;
+  --seldi-bg: #e9e9e9;
+  --seldi-card: #ffffff;
+  --seldi-line: #dcdfe6;
+  --seldi-radius: 10px;
+}
+
+/* Standalone site only — WordPress page bodies never carry this class. */
+body.seldi-standalone {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--seldi-bg);
+}
+
+/* ---------- Isolation root ---------- */
+.seldi-root {
+  background: transparent;   /* embedded: the theme's one background shows */
+  color: var(--seldi-ink);
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 1.45;
+  text-align: left;
+}
+
+/* Standalone site paints its own grey; the embedded version must not add a
+   second shade of grey on top of the WordPress background. */
+body.seldi-standalone .seldi-root {
+  background: var(--seldi-bg);
+  min-height: 100vh;
+}
+
+.seldi-root *,
+.seldi-root *::before,
+.seldi-root *::after { box-sizing: border-box; }
+
+/* ---------- Top navigation ---------- */
+.seldi-root .topbar {
+  background: var(--seldi-card);
+  border-bottom: 1px solid var(--seldi-line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.seldi-root .topbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.seldi-root .brand {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .3px;
+  color: var(--seldi-main);
+  text-decoration: none;
+  padding: 14px 0;
+  white-space: nowrap;
+}
+
+.seldi-root .brand span { color: var(--seldi-ink-soft); font-weight: 600; }
+
+/* ---------- Page layout ---------- */
+.seldi-root .page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;              /* embedded: flush with the WordPress block */
+}
+
+/* The standalone site keeps its breathing room (verified unchanged). */
+body.seldi-standalone .seldi-root .page {
+  padding: 26px 20px 60px;
+}
+
+.seldi-root .dash-section { margin-bottom: 30px; scroll-margin-top: 72px; }
+
+.seldi-root .page-head { margin-bottom: 16px; }
+
+/* h1 on the standalone site, h2 when embedded (WordPress owns the h1).
+   Font props set explicitly so theme rules on bare h2/h3 tags can't bleed
+   in through inheritance-defeating element selectors. */
+.seldi-root h1,
+.seldi-root h2 {
+  font-size: 26px;
+  font-family: inherit;
+  font-weight: 700;
+  font-style: normal;
+  margin: 4px 0 6px;
+  line-height: 1.25;
+  color: var(--seldi-main);
+}
+
+.seldi-root .insight {
+  background: var(--seldi-main-soft);
+  border-left: 4px solid var(--seldi-main);
+  padding: 10px 14px;
+  border-radius: 0 var(--seldi-radius) var(--seldi-radius) 0;
+  font-size: 14.5px;
+  color: var(--seldi-ink);
+}
+
+/* ---------- View switch + selector (above the card) ---------- */
+/* Column layout: the VIEW switch gets its own line and the buttons below
+   always span the full content width, so all six topic buttons (and all ten
+   country buttons) stay on a single row down to 1070 px content width. */
+.seldi-root .view-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.seldi-root .selector { display: flex; flex: 1 1 auto; min-width: 0; }
+
+.seldi-root .topic-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+
+.seldi-root .topic-btn {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--seldi-line);
+  background: var(--seldi-card);
+  color: var(--seldi-main);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.seldi-root .topic-btn:hover { border-color: var(--seldi-main); }
+
+.seldi-root .topic-btn.on {
+  background: var(--seldi-main);
+  border-color: var(--seldi-main);
+  color: #fff;
+}
+
+/* ---------- Filter card rows ---------- */
+/* Row 1: countries + All/None. Row 2: years + type + actions, one line. */
+.seldi-root .ctl-row {
+  display: flex;
+  gap: 14px 22px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.seldi-root .ctl-row:not(.options) {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--seldi-line);
+  margin-bottom: 14px;
+}
+
+.seldi-root .ctl-row.options {
+  flex-wrap: nowrap;      /* keep years / type / buttons on one row */
+}
+
+.seldi-root .control-group { display: flex; flex-direction: column; gap: 6px; }
+
+.seldi-root .control-group.grow { flex: 1 1 auto; min-width: 0; }
+
+.seldi-root .control-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--seldi-ink-faint);
+}
+
+.seldi-root .country-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.seldi-root .countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex: 1 1 auto;
+}
+
+/* Country selector buttons share the blue topic-button design
+   (dashboard.js gives them both classes); only the row-1 multi-select
+   pills keep the pill shape. Sized so 10 pills + All/None stay on one
+   row inside the 1110 px WordPress content width. */
+.seldi-root .country-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--seldi-line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: var(--seldi-ink-soft);
+  font-family: inherit;
+}
+
+.seldi-root .country-pill:hover { border-color: var(--seldi-accent); }
+
+/* selected: light tint #f1f1f8 (first-version look), not orange */
+.seldi-root .country-pill.on {
+  border-color: transparent;
+  background: var(--seldi-main-soft);   /* #f1f1f8 */
+  color: var(--seldi-ink);
+  font-weight: 600;
+}
+
+.seldi-root .country-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c9cfda;
+}
+
+.seldi-root .country-pill.on .dot {
+  background: var(--seldi-pill, #fff);
+  box-shadow: 0 0 0 1.5px #fff;
+}
+
+/* ---------- Chart card ---------- */
+.seldi-root .card {
+  background: var(--seldi-card);
+  border: 1px solid var(--seldi-line);
+  border-radius: var(--seldi-radius);
+  padding: 18px 20px 14px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, .05);
+}
+
+.seldi-root .pill-actions { display: flex; gap: 6px; }
+
+.seldi-root .mini-btn {
+  border: 1px solid var(--seldi-line);
+  background: #fff;
+  color: var(--seldi-ink-soft);
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.seldi-root .mini-btn:hover { background: #f6f7f9; border-color: var(--seldi-accent); }
+
+.seldi-root .years { display: flex; align-items: center; gap: 8px; }
+
+.seldi-root select {
+  font: inherit;
+  font-size: 13.5px;
+  padding: 6px 10px;
+  border: 1px solid var(--seldi-line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--seldi-ink);
+}
+
+.seldi-root .segmented { display: inline-flex; }
+
+.seldi-root .seg-btn {
+  font: inherit;
+  font-size: 13.5px;
+  padding: 6px 10px;
+  border: 1px solid var(--seldi-line);
+  background: #fff;
+  color: var(--seldi-ink-soft);
+  border-radius: 0;
+  margin-left: -1px;
+  cursor: pointer;
+}
+
+.seldi-root .segmented .seg-btn:first-child { border-radius: 6px 0 0 6px; margin-left: 0; }
+.seldi-root .segmented .seg-btn:last-child { border-radius: 0 6px 6px 0; }
+
+.seldi-root .segmented .seg-btn.on {
+  background: var(--seldi-accent);
+  border-color: var(--seldi-accent);
+  color: #fff;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.seldi-root .spacer { flex: 1 1 auto; min-width: 0; }
+
+.seldi-root .actions { display: flex; gap: 8px; align-items: center; white-space: nowrap; }
+
+.seldi-root .btn {
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 7px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: 1px solid var(--seldi-line);
+  background: #fff;
+  color: var(--seldi-ink-soft);
+}
+
+.seldi-root .btn:hover { background: #f6f7f9; }
+
+.seldi-root .btn.primary {
+  background: var(--seldi-accent);
+  border-color: var(--seldi-accent);
+  color: #fff;
+}
+
+.seldi-root .btn.primary:hover {
+  background: var(--seldi-accent-dark);
+  border-color: var(--seldi-accent-dark);
+}
+
+.seldi-root .chart-wrap { position: relative; height: 460px; }
+
+.seldi-root .empty-msg {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--seldi-ink-faint);
+  font-size: 15px;
+}
+
+.seldi-root .country-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+@media (max-width: 760px) {
+  .seldi-root h1,
+  .seldi-root h2 { font-size: 21px; }
+  .seldi-root .chart-wrap { height: 360px; }
+  .seldi-root .ctl-row.options { flex-wrap: wrap; }  /* wrap only on small screens */
+  .seldi-root .spacer { display: none; }
+}
