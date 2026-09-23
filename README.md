@@ -1,4 +1,4 @@
-# SELDI CMS 2025 Dashboard
+# SELDI CMS Dashboard
 
 An interactive, **fully static** dashboard for the regional corruption research in
 `Seldi_CMS_2025.xlsx` (SELDI Corruption Monitoring System, survey years
@@ -61,40 +61,6 @@ which is exactly what GitHub Pages serves for free.
 
 (For a user/organization site named `<user>.github.io`, it is live at the domain
 root.)
-
-## Use it on a WordPress site (seldi.net)
-
-```
-python build_singlefile.py
-```
-
-writes two **self-contained** files (CSS + data + Chart.js + app code all
-inlined, zero external requests):
-
-- **`dist/seldi-dashboard-wordpress.html`** — a *fragment*. In wp-admin, add a
-  **Custom HTML** block on the target page, open this file, select all +
-  paste, then **Update**. The dashboard renders inside your page content and
-  cannot conflict with your theme: everything is scoped under `.seldi-root`
-  with `--seldi-*` custom properties (verified against a deliberately
-  hostile mock theme). Embedded differences from the standalone site: the
-  heading starts at `<h2>` (WordPress owns the `<h1>`), there is no mini
-  top bar, no sheet-tag line, no footer / notes below the chart, no
-  background and no page padding (the content sits flush in your block;
-  internal wrappers use clash-proof names like `.dash-section` so theme
-  rules such as `.section` cannot match), and the browser tab title is
-  never changed. Tested at the real 1110 px content width.
-- **`dist/seldi-dashboard-standalone.html`** — a full HTML document. Upload it
-  via FTP/file manager (e.g. as `seldi.net/dashboard/index.html`) if you'd
-  rather serve it from your own hosting.
-
-Notes:
-
-- Pasting scripts requires an administrator account on a single-site
-  WordPress. If the dashboard is blank after saving (scripts were stripped),
-  install the **WPCode** plugin and paste the same file into a snippet, or use
-  the FTP file instead.
-- After every dashboard change: run `python build_singlefile.py`, then re-paste
-  (or re-upload) the file.
 
 ## Updating the data
 
